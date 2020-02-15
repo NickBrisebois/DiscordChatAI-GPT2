@@ -1,3 +1,4 @@
-./checkpoint
-./models
-./samples
+checkpoint/
+models/
+samples/
+__pycache__
