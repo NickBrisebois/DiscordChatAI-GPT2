@@ -4,6 +4,8 @@ import os
 class ChatAI:
     def __init__(self):
         self.sess = gpt2.start_tf_sess()
+
+    def load_model(self):
         gpt2.load_gpt2(self.sess)
 
     # Generate new models given a model name and data source path
@@ -18,6 +20,9 @@ class ChatAI:
             self.sess,
             data_path,
             model_name=model_name,
+            batch_size=2,
+            sample_every=50,
+            sample_length=100,
             steps=1000
         )
         gpt2.generate(self.sess)
@@ -25,11 +30,12 @@ class ChatAI:
     def get_bot_response(self, prefix):
         return gpt2.generate(self.sess,
             model_name="124M",
+            length=5,
             prefix=prefix,
-            length=10,
             temperature=1,
             top_p=1,
-            nsamples=1,
+            nsamples=3,
             batch_size=1, 
-            return_as_list=True
+            return_as_list=True,
+            include_prefix=False,
         )[0]
