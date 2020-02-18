@@ -1,5 +1,7 @@
 import gpt_2_simple as gpt2
 import os
+import random
+
 
 class ChatAI:
     def __init__(self):
@@ -20,22 +22,19 @@ class ChatAI:
             self.sess,
             data_path,
             model_name=model_name,
-            batch_size=2,
-            sample_every=50,
+            batch_size=1,
+            sample_every=100,
             sample_length=100,
-            steps=1000
         )
         gpt2.generate(self.sess)
 
-    def get_bot_response(self, prefix):
+    def get_bot_response(self, author, prefix):
         return gpt2.generate(self.sess,
-            model_name="124M",
-            length=5,
-            prefix=prefix,
-            temperature=1,
-            top_p=1,
-            nsamples=3,
-            batch_size=1, 
-            return_as_list=True,
-            include_prefix=False,
-        )[0]
+                            model_name="124M",
+                            length=random.randint(10, 30),
+                            prefix=author + ": " + prefix,
+                            temperature=0.9,
+                            include_prefix=False,
+                            return_as_list=True,
+                            )[0]
+
