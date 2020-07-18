@@ -18,7 +18,7 @@ def main():
 
     if args.genmodel:
         ai = ChatAI()
-        ai.generate_models("124M", "./removespaces.txt")
+        ai.generate_models("124M", "./chat.txt")
     else:
         client = ChatBot()
         token = args.token
