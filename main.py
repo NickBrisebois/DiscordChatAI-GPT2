@@ -4,7 +4,6 @@ import argparse
 from Bot.bot import ChatBot
 from Bot.ai import ChatAI
 
-
 def main():
     """Main function"""
     parser = argparse.ArgumentParser(description="Big Lez Chat Bot")
@@ -13,12 +12,25 @@ def main():
                         dest="genmodel",
                         action="store_true",
                         help="generate new model")
+    parser.add_argument("-t", action="test", help="Test bot locally")
 
     args = parser.parse_args()
 
+    if args.test:
+        ai = ChatAI()
+        ai.load_model()
+
+        while True:
+            inp = input("> ")
+            print(ai.get_bot_response(author="h!", prefix=inp))
+
+        return
+
+            
+
     if args.genmodel:
         ai = ChatAI()
-        ai.generate_models("124M", "./chat.txt")
+        ai.generate_models("355M", "./chat.txt")
     else:
         client = ChatBot()
         token = args.token
