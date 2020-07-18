@@ -12,7 +12,7 @@ def main():
                         dest="genmodel",
                         action="store_true",
                         help="generate new model")
-    parser.add_argument("-t", action="test", help="Test bot locally")
+    parser.add_argument("-t", dest="test", action="store_true", help="Test bot locally")
 
     args = parser.parse_args()
 
