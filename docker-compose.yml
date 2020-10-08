@@ -5,6 +5,7 @@ services:
         runtime: nvidia
         volumes:
             - ./models:/models/
+            - ./input.txt:/input.txt
         command: "--genmodel"
 
     run-bot:

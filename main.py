@@ -26,11 +26,9 @@ def main():
 
         return
 
-            
-
     if args.genmodel:
         ai = ChatAI()
-        ai.generate_models("355M", "./chat.txt")
+        ai.generate_models("355M", "./input.txt")
     else:
         client = ChatBot()
         token = args.token

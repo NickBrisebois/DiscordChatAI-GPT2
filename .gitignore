@@ -2,5 +2,5 @@ checkpoint/
 models/
 samples/
 __pycache__
-chat.txt
+input.txt
 .env

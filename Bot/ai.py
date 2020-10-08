@@ -22,7 +22,10 @@ class ChatAI:
             self.sess,
             data_path,
             model_name=model_name,
-        )
+            batch_size=1,
+            sample_every=100,
+            sample_length=100,
+            )
         gpt2.generate(self.sess)
 
     def add_to_history(self, author, message):
