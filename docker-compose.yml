@@ -1,0 +1,16 @@
+version: "2.3"
+services:
+    gen-model:
+        image: chatai:latest
+        runtime: nvidia
+        volumes:
+            - ./models:/models/
+        command: "--genmodel"
+
+    run-bot:
+        image: chatai:latest
+        runtime: nvidia
+        volumes:
+            - ./models:/models/
+        environment:
+            - DISCORD_TOKEN=${TOKEN}

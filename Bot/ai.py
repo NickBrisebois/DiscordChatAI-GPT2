@@ -22,7 +22,6 @@ class ChatAI:
             self.sess,
             data_path,
             model_name=model_name,
-            batch_size=1,
         )
         gpt2.generate(self.sess)
 

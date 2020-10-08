@@ -5,6 +5,9 @@ RUN mkdir /chat
 RUN pip3 install discord gpt-2-simple
 
 COPY ./Bot /chat/Bot
-copy ./main.py /chat/
+COPY ./main.py /chat/
+COPY ./entrypoint.sh /chat/
 
-ENTRYPOINT ["python3", "/chat/main.py"]
+RUN chmod +x /chat/entrypoint.sh
+
+ENTRYPOINT ["/chat/entrypoint.sh"]

@@ -3,3 +3,4 @@ models/
 samples/
 __pycache__
 chat.txt
+.env
