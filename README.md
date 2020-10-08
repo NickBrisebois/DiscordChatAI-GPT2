@@ -1,5 +1,4 @@
 ## discord gpt2 chatbot
-(based on https://github.com/NickBrisebois/DiscordChatAI-GPT2)
 uses Python 3
 
 Bot responds to mentions and also has a 25% chance of responding to random messages. Bot can also briefly remember previous messages and use their context. 
