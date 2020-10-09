@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ $1 == "--genmodel" ]; then
-    /chat/main.py --genmodel
+if [ "$1" == "--genmodel" ]; then
+    python3 -u /chat/main.py --genmodel
 else 
-    /chat/main.py --token=$DISCORD_TOKEN
+    python3 -u /chat/main.py --token=$DISCORD_TOKEN
 fi
