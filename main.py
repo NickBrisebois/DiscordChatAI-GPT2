@@ -4,6 +4,7 @@ import argparse
 from Bot.bot import ChatBot
 from Bot.ai import ChatAI
 
+MODEL_NAME = "355M"
 
 def main():
     """Main function"""
@@ -17,7 +18,6 @@ def main():
                         dest="response_chance", 
                         help="How likely should the bot respond. For example: give 0.25 for a 25% chance, give 0 for no random responses.")
     parser.add_argument("-t", dest="test", action="store_true", help="Test responses in CLI.")
-
     args = parser.parse_args()
 
     if args.test:
@@ -26,7 +26,7 @@ def main():
 
         while True:
             inp = input("> ")
-            print(ai.get_bot_response(author="h!", message=inp))
+            print(ai.get_bot_response(MODEL_NAME, author="h!", message=inp))
 
         return
 
@@ -34,9 +34,10 @@ def main():
         ai = ChatAI()
         ai.generate_models("355M", "./input.txt")
     else:
-        client = ChatBot(args.response_chance)
-        token = args.token
-        client.run(token)
+        client = ChatBot()
+        client.set_response_chance(args.response_chance)
+        client.set_model_name(MODEL_NAME)
+        client.run(args.token)
 
 
 if __name__ == "__main__":

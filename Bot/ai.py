@@ -13,9 +13,9 @@ class ChatAI:
         gpt2.load_gpt2(self.sess)
 
 
-    def generate_models(self, name: str, data_path: str) -> None:
+    def generate_models(self, model_name: str, data_path: str) -> None:
         """ Generate new models given a model name and data source path. Data source path being a pre-existing gpt2 learning model """
-        model_name = name
+        print(os.path.join("models", model_name))
         if not os.path.isdir(os.path.join("models", model_name)):
             print(f"Downloading {model_name} model...")
             gpt2.download_gpt2(model_name=model_name)
@@ -27,14 +27,15 @@ class ChatAI:
             batch_size=1,
             sample_every=100,
             sample_length=100,
+            save_every=100
             )
         gpt2.generate(self.sess)
 
 
-    def get_bot_response(self, author: str, message: str) -> str:
+    def get_bot_response(self, model_name: str, author: str, message: str) -> str:
         """ Get a response to a given message using GPT2 model """
         return gpt2.generate(self.sess,
-                            model_name="124M",
+                            model_name=model_name,
                             length=random.randint(10, 30),
                             prefix=author + ": " + message,
                             temperature=0.9,

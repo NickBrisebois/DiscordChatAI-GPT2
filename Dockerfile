@@ -10,4 +10,6 @@ COPY ./entrypoint.sh /chat/
 
 RUN chmod +x /chat/entrypoint.sh
 
+WORKDIR /chat/
+
 ENTRYPOINT ["/chat/entrypoint.sh"]

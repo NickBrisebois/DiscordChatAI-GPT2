@@ -11,8 +11,9 @@ class ChatBot(discord.Client):
     ChatBot inherits the discord.Client class from discord.py
     """
 
-    def __init__(self, response_chance: float = 0.25) -> None:
-        self.response_chance = response_chance
+    def __init__(self) -> None:
+        self.model_name = "355M" # Overwrite with set_model_name()
+        super().__init__()
 
 
     async def on_ready(self) -> None:
@@ -37,14 +38,14 @@ class ChatBot(discord.Client):
                 break
 
         # Only respond randomly (or when mentioned), not to every message
-        if random.random() > self.response_chance and has_mentioned == False:
+        if random.random() > float(self.response_chance) and has_mentioned == False:
             return
 
         processed_input = self.process_input(message.content)
 
         response = ""
         with message.channel.typing():
-            response = self.chat_ai.get_bot_response(message.author.nick, processed_input)
+            response = self.chat_ai.get_bot_response(self.model_name, message.author.nick, processed_input)
 
         await message.channel.send(response)
 
@@ -64,3 +65,12 @@ class ChatBot(discord.Client):
 
         return should_respond
 
+
+    def set_response_chance(self, response_chance: float = 0.25) -> None:
+        """ Set the response rate """
+        self.response_chance = response_chance
+
+
+    def set_model_name(self, model_name: str = "355M") -> None:
+        """ Set the GPT2 model name """
+        self.model_name = model_name

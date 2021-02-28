@@ -2,19 +2,21 @@ version: "2.3"
 services:
     gen-model:
         image: chatai:latest
+        # Remove this line if not using an nvidia gpu
         runtime: nvidia
         volumes:
-            - ./checkpoint:/checkpoint
-            - ./models:/models/
-            - ./input.txt:/input.txt
+            - ./checkpoint:/chat/checkpoint
+            - ./models:/chat/models/
+            - ./input.txt:/chat/input.txt
         command: "--genmodel"
 
     run-bot:
         image: chatai:latest
+        # Remove this line if not using an nvidia gpu
         runtime: nvidia
         volumes:
-            - ./checkpoint:/checkpoint
-            - ./models:/models/
+            - ./checkpoint:/chat/checkpoint
+            - ./models:/chat/models/
         environment:
             - DISCORD_TOKEN=${TOKEN}
             - RESPONSE_CHANCE=0.25

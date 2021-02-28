@@ -2,6 +2,10 @@
 
 Bot responds to mentions and also has a variable chance of responding to random messages.
 
+# Important Note
+
+You must train your bot for at least 100 cycles otherwise it will have not saved any progress thus causing a "ValueError: Can't load save_path when it is None." error.
+
 #### To train (non docker):
 Run `python3 main.py --genmodel` to train.
 Requires a .txt file of the text channel history to be placed in the same directory as name called "chat.txt". An example of the chat.txt format is provided. It's defaulted to the 355M dataset, but you can change its value in main.py and in Bot/ai.py.
