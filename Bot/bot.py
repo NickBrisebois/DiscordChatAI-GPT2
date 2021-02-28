@@ -2,46 +2,65 @@ import random
 import discord
 from .ai import ChatAI
 
-BOT_RESPONSE_CHANCE = 0.25
-
-
 class ChatBot(discord.Client):
-    async def on_ready(self):
-        print("Logged on as", self.user)
-        self.chat_ai = ChatAI()
-        self.chat_ai.load_model()
+    """ChatBot handles discord communication. This class runs its own thread that
+    persistently watches for new messages, then acts on them when the bots username
+    is mentioned. It will use the ChatAI class to generate messages then send them
+    back to the configured server channel.
 
-    async def on_message(self, message):
+    ChatBot inherits the discord.Client class from discord.py
+    """
+
+    def __init__(self, response_chance: float = 0.25) -> None:
+        self.response_chance = response_chance
+
+
+    async def on_ready(self) -> None:
+        """ Initializes the GPT2 AI on bot startup """
+        print("Logged on as", self.user)
+        self.chat_ai = ChatAI() # Ready the GPT2 AI generator
+        self.chat_ai.load_model() # Load the GPT2 model
+
+
+    async def on_message(self, message: discord.Message) -> None:
+        """ Handle new messages sent to the server channels this bot is watching """
+
         if message.author == self.user:
+            # Skip any messages sent by ourselves so that we don't get stuck in any loops
             return
 
+        # Check to see if bot has been mentioned
         has_mentioned = False
         for mention in message.mentions:
             if str(mention) == self.user.name+"#"+self.user.discriminator:
                 has_mentioned = True
-                break;
+                break
 
-
-        if random.random() < BOT_RESPONSE_CHANCE or has_mentioned == True:
-            msg = message.content
-        else:
-            self.chat_ai.add_to_history(message.author.name, message.content)
+        # Only respond randomly (or when mentioned), not to every message
+        if random.random() > self.response_chance and has_mentioned == False:
             return
 
-        msg = message.content
-        msg.replace("@"+self.user.name+"#"+self.user.discriminator, "")
-        msg.replace("@"+self.user.name, "")
+        processed_input = self.process_input(message.content)
 
-        async with message.channel.typing():
-            response = self.chat_ai.get_bot_response(message.author.name, msg)
+        response = ""
+        with message.channel.typing():
+            response = self.chat_ai.get_bot_response(message.author.nick, processed_input)
 
-        for resp in response:
-            # look for mentions
-            new_resp = resp
-            for word in resp.split():
-                if word.startswith("@"):
-                    for member in message.channel.members:
-                        if word == "@"+member.name:
-                            new_resp = new_resp.replace(word, member.mention)
-            
-            await message.channel.send(new_resp)
+        await message.channel.send(response)
+
+
+    def process_input(self, message: str) -> str:
+        """ Process the input message """
+        processed_input = message
+        # Convert user ids to just nick names
+        processed_input.replace("@"+self.user.name+"#"+self.user.discriminator, "")
+        processed_input.replace("@"+self.user.name, "")
+        return processed_input
+
+
+    def check_if_should_respond(self, has_been_mentioned) -> bool:
+        """ Check if the bot should respond to a message """
+        should_respond = random.random() < self.response_chance
+
+        return should_respond
+

@@ -4,7 +4,7 @@ services:
         image: chatai:latest
         runtime: nvidia
         volumes:
-            - ./checkpoints:/checkpoints
+            - ./checkpoint:/checkpoint
             - ./models:/models/
             - ./input.txt:/input.txt
         command: "--genmodel"
@@ -13,7 +13,8 @@ services:
         image: chatai:latest
         runtime: nvidia
         volumes:
-            - ./checkpoints:/checkpoints
+            - ./checkpoint:/checkpoint
             - ./models:/models/
         environment:
             - DISCORD_TOKEN=${TOKEN}
+            - RESPONSE_CHANCE=0.25
