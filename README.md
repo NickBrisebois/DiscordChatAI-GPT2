@@ -28,5 +28,7 @@ You can test this bot locally by running `python3 main.py -t`. It will let you i
  `python3 main.py --token [discord bot token]`
 
 #### Docker environment variables:
+
 Set TOKEN to pass in your discord token
+
 Set RESPONSE_CHANCE to set how likely the bot is to respond (0 for no random responses, 0.25 for 25% chance, etc)
