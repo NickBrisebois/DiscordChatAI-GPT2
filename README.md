@@ -2,7 +2,7 @@
 
 Bot responds to mentions and also has a variable chance of responding to random messages.
 
-# Important Note
+## Important Note
 
 You must train your bot for at least 100 cycles otherwise it will have not saved any progress thus causing a "ValueError: Can't load save_path when it is None." error.
 
