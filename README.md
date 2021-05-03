@@ -36,3 +36,8 @@ You can test this bot locally by running `python3 main.py -t`. It will let you i
 Set TOKEN to pass in your discord token
 
 Set RESPONSE_CHANCE to set how likely the bot is to respond (0 for no random responses, 0.25 for 25% chance, etc)
+
+### F.A.Q.
+
+#### Can I reuse my pre-generated model?
+See this great answer from johnnymcmike: https://github.com/NickBrisebois/DiscordChatAI-GPT2/issues/3#issuecomment-819532212
